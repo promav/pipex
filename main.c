@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include "libft.h"
+#include "ft_printf.h"
 #include <sys/wait.h>
 
 void ft_close(int a, int b, int c, int d)
@@ -30,7 +31,7 @@ void ft_access(int *inoutfile, char **argv)
 	cmd = ft_strjoin("/usr/bin/",arg[0]);
 	if(access(cmd, X_OK) != 0)
 	{
-		printf("%s: command not found\n", arg[0]);
+		ft_printf("%s: command not found\n", arg[0]);
 		ft_superfree(arg, cmd, argv[2]);
 		ft_close(inoutfile[0], inoutfile[1], 99, 99);
 		exit(EXIT_FAILURE);
@@ -40,7 +41,7 @@ void ft_access(int *inoutfile, char **argv)
 	cmd = ft_strjoin("/usr/bin/",arg[0]);
 	if(access(cmd, X_OK) != 0)
 	{
-		printf("%s: command not found\n", arg[0]);
+		ft_printf("%s: command not found\n", arg[0]);
 		ft_superfree(arg, cmd, argv[3]);
 		ft_close(inoutfile[0], inoutfile[1], 99, 99);
 		exit(EXIT_FAILURE);
@@ -52,12 +53,12 @@ void ft_open(char **argv, int *inoutfile)
 {
 	if(inoutfile[0] < 0)
 	{
-		printf("-bash: %s: No such file or directory\n", argv[1]);
+		ft_printf("-bash: %s: No such file or directory\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
 	if(inoutfile[1] < 0)
 	{
-		printf("-bash: %s: No such file or directory\n", argv[5]);
+		ft_printf("-bash: %s: No such file or directory\n", argv[5]);
 		close(inoutfile[0]);
 		exit(EXIT_FAILURE);
 	}
@@ -119,10 +120,10 @@ void ft_waitpid(pid_t *pid)
 
 	waitpid(pid[0], &status, 0);
 	if(WIFEXITED(status) && WEXITSTATUS(status) != 0)
-		printf("Fallo en el primer comando\n");
+		ft_printf("Fallo en el primer comando\n");
 	waitpid(pid[1], &status, 0);
 	if(WIFEXITED(status) && WEXITSTATUS(status) != 0)
-		printf("Fallo en el segundo comando\n");
+		ft_printf("Fallo en el segundo comando\n");
 }
 
 void ft_action(char **argv, int *fd, int *inoutfile)
