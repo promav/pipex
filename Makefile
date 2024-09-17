@@ -1,6 +1,6 @@
 CC = gcc
 CFFLAGS = -Wall -Werror -Wextra
-SRC = ft_memcpy.c ft_strdup.c ft_strlcat.c ft_substr.c ft_split.c ft_strjoin.c ft_strlen.c ft_printf.c ft_putchar.c ft_puthexa.c ft_putnbr.c ft_putstr.c ft_putunbr.c ft_putvoid.c main.c
+SRC = ft_memcpy.c ft_strdup.c ft_strlcat.c ft_substr.c ft_split.c ft_strjoin.c ft_strlen.c ft_printf.c ft_putchar.c ft_puthexa.c ft_putnbr.c ft_putstr.c ft_putunbr.c ft_putvoid.c principals.c aux.c
 OBJ = $(SRC:.c=.o)
 LIBS = libft.h ft_printf.h
 NAME = pipex
