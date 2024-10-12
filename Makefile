@@ -1,24 +1,38 @@
 CC = gcc
-CFFLAGS = -Wall -Werror -Wextra
-SRC = ft_memcpy.c ft_strdup.c ft_strlcat.c ft_substr.c ft_split.c ft_strjoin.c ft_strlen.c ft_printf.c ft_putchar.c ft_puthexa.c ft_putnbr.c ft_putstr.c ft_putunbr.c ft_putvoid.c principals.c aux.c
-OBJ = $(SRC:.c=.o)
-LIBS = libft.h ft_printf.h
+CFLAGS = -Wall -Werror -Wextra -Iinclude -Ilibft/libs
+SRC = src/principals.c src/aux.c src/aux2.c src/aux3.c
+OBJ = $(SRC:src/%.c=obj/%.o)
 NAME = pipex
+LIBFT_DIR = libft/
+LIBFT = $(LIBFT_DIR)/libft/libft.a
 
-all: $(NAME)
+all: $(LIBFT) $(NAME)
 
-$(NAME) : $(OBJ)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
+$(LIBFT):
+	@$(MAKE) -C $(LIBFT_DIR)
 
-%.o: %.c
-	$(CC) $(CFLAGS) $(LIB) -c $< -o $@
+obj:
+	@mkdir -p obj
+
+$(NAME): obj $(OBJ)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+	@echo "$(NAME) compiled successfully"
+
+$(OBJ): obj/%.o: src/%.c | obj
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJ)
+	@rm -rf obj
+	@$(MAKE) -C $(LIBFT_DIR) clean
+	@echo "make clean done"
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@echo "make fclean done"
 
 re: fclean all
 
 .PHONY: all clean fclean re
+
+
